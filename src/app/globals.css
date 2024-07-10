@@ -10,7 +10,15 @@
 
 .pink-button:hover {
     @apply pl-2 pr-4; /* Increase padding to make the button wider */
-  }
+}
+
+/* .blue-button {
+  @apply text-light-yellow bg-normal-blue rounded-lg p-2 text-center transition-all duration-300;
+}
+
+.blue-button:hover {
+  @apply pl-2 pr-4; /* Increase padding to make the button wider 
+} */
   
   /*? --------------- Navbar Links --------------- */
 .desktop-nav div::after {

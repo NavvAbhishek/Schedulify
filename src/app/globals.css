@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*? --------------- Buttons --------------- */
+
+.pink-button {
+  @apply text-black bg-pink rounded-lg p-2.5 text-center transition-all duration-300;
+}
+
+.pink-button:hover {
+    @apply pl-2 pr-4; /* Increase padding to make the button wider */
+  }
+  
+  /*? --------------- Navbar Links --------------- */
+.desktop-nav div::after {
+    content: "";
+    position: absolute;
+    display: block;
+    height: 3.5px;
+    width: 0%;
+    background-color: #F72585;
+    transition: all ease-in-out 250ms;
+  }
+  .desktop-nav div:hover::after {
+    width: 80%;
+  }

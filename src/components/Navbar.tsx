@@ -1,14 +1,37 @@
 "use client";
 import Image from "next/image";
 import logo from "../../public/shedulify logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { FaBars } from "react-icons/fa";
 import { FaXmark, FaArrowRightLong } from "react-icons/fa6";
 import Link from "next/link";
+import axios from "axios";
+
+type UserData = {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  isVerified: boolean;
+};
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const res = await axios.get("/api/users/me");
+        setUserData(res.data.data);
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
+    getUserDetails();
+  }, []);
 
   return (
     <header className="bg-black">
@@ -39,7 +62,11 @@ export default function Navbar() {
         </div>
         <nav className="desktop-nav text-pink text-md font-semibold leading-6 hidden lg:flex lg:gap-x-12">
           <div className="relative">
-            <Link href="/dashboard">Dashboard</Link>
+            {userData?.role === "admin" ? (
+              <Link href="/admin-dashboard">Dashboard</Link>
+            ) : (
+              <Link href="/teacher-dashboard">Dashboard</Link>
+            )}
           </div>
           <div className="relative">
             <Link href="/profile">Profile</Link>
@@ -87,24 +114,39 @@ export default function Navbar() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Link
-                  href="/dashboard"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/profile"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
-                >
-                  Profile
-                </Link>
-                <Link
-                  href="/about-us"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
-                >
-                  About us
-                </Link>
+                <div>
+                  {userData?.role === "admin" ? (
+                    <Link
+                      href="/admin-dashboard"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/teacher-dashboard"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
+                    >
+                      Dashboard
+                    </Link>
+                  )}
+                </div>
+                <div>
+                  <Link
+                    href="/profile"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
+                  >
+                    Profile
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    href="/about-us"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
+                  >
+                    About us
+                  </Link>
+                </div>
               </div>
               <div className="py-6">
                 <Link

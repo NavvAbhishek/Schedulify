@@ -45,9 +45,6 @@ export default function Navbar() {
             <Link href="/profile">Profile</Link>
           </div>
           <div className="relative">
-            <Link href="/profile/mark-attendance">Mark Attendance</Link>
-          </div>
-          <div className="relative">
             <Link href="/about-us">About us</Link>
           </div>
         </nav>
@@ -101,12 +98,6 @@ export default function Navbar() {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
                 >
                   Profile
-                </Link>
-                <Link
-                  href="/profile/mark-attendance"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-pink hover:bg-dark-blue"
-                >
-                  Mark Attendance
                 </Link>
                 <Link
                   href="/about-us"

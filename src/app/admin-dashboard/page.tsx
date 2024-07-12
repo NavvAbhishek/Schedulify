@@ -1,16 +1,54 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
-const page = () => {
+const AdminDashboard = () => {
+  const [classData, setClassData] = useState({
+    className:'',
+    roomCapacity:'',
+    teacherId:'',
+    teacherName:'',
+    subject:'',
+    teacherAvailability:''
+  });
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      console.log("Sending class data:", classData);
+      const response = await axios.post("/api/add-data", classData);
+      console.log("Class Data addedd successfully", response.data);
+      // Reset the form here
+      setClassData({
+        className:'',
+        roomCapacity:'',
+        teacherId:'',
+        teacherName:'',
+        subject:'',
+        teacherAvailability:''
+      });
+      toast("Class Added Successfully!", {
+        icon: "🎓",
+      });
+    } catch (error:any) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
   return (
     <div>
       <Navbar />
       <div className="flex">
         <div className="w-1/4 flex-shrink-0 ">
           <div className="py-5">
-            <h1 className="text-3xl text-purple font-bold text-center">Add Data</h1>
-            <form className="flex flex-col items-start px-10 py-10">
+            <h1 className="text-3xl text-purple font-bold text-center">
+              Add Data
+            </h1>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-start px-10 py-10"
+            >
               <div className="mb-4">
                 <label
                   htmlFor="first_name"
@@ -20,6 +58,10 @@ const page = () => {
                 </label>
                 <input
                   type="text"
+                  value={classData.className}
+                  onChange={(e) =>
+                    setClassData({ ...classData, className: e.target.value })
+                  }
                   className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
                 />
               </div>
@@ -32,6 +74,10 @@ const page = () => {
                 </label>
                 <select
                   id="room_capacity"
+                  value={classData.roomCapacity}
+                  onChange={(e) =>
+                    setClassData({ ...classData, roomCapacity: e.target.value })
+                  }
                   className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
                 >
                   <option value="25">25</option>
@@ -42,6 +88,7 @@ const page = () => {
               </div>
               <button
                 type="button"
+                onClick={handleSubmit}
                 className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               >
                 Add Data
@@ -55,4 +102,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AdminDashboard;

@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MdDelete, MdModeEditOutline } from "react-icons/md";
 
 type LoadedClassData = {
   className: string;
@@ -140,6 +141,8 @@ const AdminDashboard = () => {
                   <th>Teacher name</th>
                   <th>Subject</th>
                   <th>Teacher availability</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody className="table-body">
@@ -151,6 +154,18 @@ const AdminDashboard = () => {
                     <td>{data.teacherName}</td>
                     <td>{data.subject}</td>
                     <td>{data.teacherAvailability}</td>
+                    <td>
+                      <MdDelete
+                        className="w-6 h-6 cursor-pointer"
+                        title="Delete Class"
+                      />
+                    </td>
+                    <td>
+                      <MdModeEditOutline
+                        className="w-6 h-6 cursor-pointer"
+                        title="Edit Class"
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

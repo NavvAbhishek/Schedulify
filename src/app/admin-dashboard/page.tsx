@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const getClassesData = async () => {
       try {
-        const res = await axios.get("/api/get-classess");
+        const res = await axios.get("/api/get-data");
         console.log("API Response:", res.data);
 
         if (Array.isArray(res.data.data)) {

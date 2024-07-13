@@ -33,3 +33,60 @@
   .desktop-nav div:hover::after {
     width: 80%;
   }
+
+  /*? --------------- Classes Table --------------- */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-body tr:nth-child(even) {
+  background-color: #ffd60a;
+}
+
+.table-body tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.table-body tr:hover:nth-child(even) {
+  background-color: #ffc300;
+}
+
+.table-body {
+  cursor: pointer;
+}
+
+.table-body th,
+.table-body td {
+  border: 2px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+.table-head tr th {
+  padding: 8px 12px 8px 12px;
+  border: 2px solid #000;
+}
+
+@media (max-width: 768px) {
+  .table-head th {
+    font-size: 0.8rem;
+  }
+  .table-body th,
+  .table-body td {
+    padding: 2px 4px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .table-head th {
+    font-size: 0.8rem;
+  }
+  .table-body th,
+  .table-body td {
+    padding: 1px 2px;
+    font-size: 0.8rem;
+  }
+}

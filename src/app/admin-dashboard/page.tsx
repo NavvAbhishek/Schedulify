@@ -1,18 +1,29 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+type LoadedClassData = {
+  className: string;
+  roomCapacity: string;
+  teacherId: string;
+  teacherName: string;
+  subject: string;
+  teacherAvailability: string;
+};
 
 const AdminDashboard = () => {
   const [classData, setClassData] = useState({
-    className:'',
-    roomCapacity:'',
-    teacherId:'',
-    teacherName:'',
-    subject:'',
-    teacherAvailability:''
+    className: "",
+    roomCapacity: "",
+    teacherId: "",
+    teacherName: "",
+    subject: "",
+    teacherAvailability: "",
   });
+  const [loadedClassData, setLoadedClassData] = useState<LoadedClassData[]>([]);
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -21,25 +32,44 @@ const AdminDashboard = () => {
       console.log("Class Data addedd successfully", response.data);
       // Reset the form here
       setClassData({
-        className:'',
-        roomCapacity:'',
-        teacherId:'',
-        teacherName:'',
-        subject:'',
-        teacherAvailability:''
+        className: "",
+        roomCapacity: "",
+        teacherId: "",
+        teacherName: "",
+        subject: "",
+        teacherAvailability: "",
       });
       toast("Class Added Successfully!", {
         icon: "🎓",
       });
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error);
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    const getClassesData = async () => {
+      try {
+        const res = await axios.get("/api/get-classess");
+        console.log("API Response:", res.data);
+
+        if (Array.isArray(res.data.data)) {
+          setLoadedClassData(res.data.data);
+        } else {
+          console.error("Data is not an array", res.data);
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
+    getClassesData();
+  }, []);
+
   return (
     <div>
       <Navbar />
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         <div className="w-1/4 flex-shrink-0 ">
           <div className="py-5">
             <h1 className="text-3xl text-purple font-bold text-center">
@@ -96,7 +126,37 @@ const AdminDashboard = () => {
             </form>
           </div>
         </div>
-        <div className="w-3/4 flex-shrink-0 bg-blue">Table</div>
+        <div className="w-3/4 flex flex-col items-center gap-10 flex-shrink-0 py-5">
+          <h1 className="text-3xl text-purple font-bold text-center">
+            Classess
+          </h1>
+          <div className="overflow-x-auto">
+            <table className="table">
+              <thead className="table-head bg-dark-blue text-white">
+                <tr>
+                  <th>Class name</th>
+                  <th>Room capacity</th>
+                  <th>Teacher ID</th>
+                  <th>Teacher name</th>
+                  <th>Subject</th>
+                  <th>Teacher availability</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
+                {loadedClassData.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data.className}</td>
+                    <td>{data.roomCapacity}</td>
+                    <td>{data.teacherId}</td>
+                    <td>{data.teacherName}</td>
+                    <td>{data.subject}</td>
+                    <td>{data.teacherAvailability}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

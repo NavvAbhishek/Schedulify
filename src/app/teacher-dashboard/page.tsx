@@ -1,10 +1,12 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import PopupBox from "@/components/PopupBox";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
 
 type LoadedClassData = {
+  _id: string;
   className: string;
   roomCapacity: string;
   teacherId: string;
@@ -15,6 +17,22 @@ type LoadedClassData = {
 
 const TeacherDashboard = () => {
   const [loadedClassData, setLoadedClassData] = useState<LoadedClassData[]>([]);
+  const [selectedClassData, setSelectedClassData] = useState<LoadedClassData | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleEditClick = (data: LoadedClassData) => {
+    setSelectedClassData(data);
+    setIsPopupOpen(true);
+  };
+
+  const handleSave = (updatedClass: LoadedClassData) => {
+    const updatedData = loadedClassData.map((classData) =>
+      classData._id === updatedClass._id ? updatedClass : classData
+    );
+
+    setLoadedClassData(updatedData);
+    setIsPopupOpen(false);
+  };
 
   useEffect(() => {
     const getClassesData = async () => {
@@ -38,7 +56,7 @@ const TeacherDashboard = () => {
     <div>
       <Navbar />
       <div className="flex flex-col items-center gap-10 flex-shrink-0 py-5">
-        <h1 className="text-3xl text-purple font-bold text-center">Classess</h1>
+        <h1 className="text-3xl text-dark-blue font-bold text-center">Classess</h1>
         <div className="overflow-x-auto">
           <table className="table">
             <thead className="table-head bg-dark-blue text-white">
@@ -63,6 +81,7 @@ const TeacherDashboard = () => {
                   <td>{data.teacherAvailability}</td>
                   <td>
                     <MdModeEditOutline
+                      onClick={() => handleEditClick(data)}
                       className="w-6 h-6 cursor-pointer"
                       title="Edit Class"
                     />
@@ -73,6 +92,13 @@ const TeacherDashboard = () => {
           </table>
         </div>
       </div>
+      {isPopupOpen && selectedClassData && (
+        <PopupBox 
+        data={selectedClassData} 
+        onClose={() => setIsPopupOpen(false)}
+        onSave={handleSave}
+        />
+      )}
     </div>
   );
 };

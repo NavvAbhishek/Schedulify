@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 
 type LoadedClassData = {
+  _id: string;
   className: string;
   roomCapacity: string;
   teacherId: string;

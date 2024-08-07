@@ -58,7 +58,7 @@ const ProfilePage = () => {
       <div className="flex flex-col items-center ">
         <div>
           <h1 className="text-3xl font-bold text-pink p-2 rounded-md mt-16 sm:mt-18">
-          👨🏻‍💻 My Profile
+            👨🏻‍💻 My Profile
           </h1>
         </div>
         {userData && (
@@ -87,16 +87,13 @@ const ProfilePage = () => {
           </div>
         )}
         <hr />
-        <div className="buttons flex mt-8 sm:gap-[4.5rem] gap-10">
-          <div>
-            <button
-              type="button"
-              onClick={logout}
-              className="pink-button font-bold"
-              style={{ padding: '0.5rem 1.25rem' }} 
-              >
-              Logout
-            </button>
+        <div>
+          <div
+            onClick={logout}
+            className="pink-button font-bold mt-6 cursor-pointer"
+            style={{ padding: "0.5rem 1.25rem" }}
+          >
+            Logout
           </div>
         </div>
         <div></div>

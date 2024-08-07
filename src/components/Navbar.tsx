@@ -45,8 +45,8 @@ export default function Navbar() {
             <Image
               src={logo}
               alt="Picture of the author"
-              width={70}
-              height={70}
+              width={60}
+              height={60}
             />
           </Link>
         </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
         </nav>
         <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
           <Link href="/login" className="pink-button group">
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex justify-center items-center gap-2 p-[7px]">
               <p className="font-semibold transition-all duration-300 group-hover:mr-2">
                 Getting Start
               </p>

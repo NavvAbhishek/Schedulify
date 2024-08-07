@@ -43,6 +43,7 @@ const LoginPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-200">
       <div className="logo flex flex-row gap-5 items-center md:mb-5">
+      <Link href='/'>
         <Image
           src="/Logo.png"
           alt="logo"
@@ -50,6 +51,7 @@ const LoginPage = () => {
           height={80}
           className="rounded w-[60px] h-[60px] md:w-[80px] md:h-[80px]"
         />
+        </Link>
         <h1 className="text-2xl text-purple md:text-4xl font-bold">Schedulify</h1>
       </div>
       <div className="flex md:flex-row flex-col">
@@ -95,15 +97,14 @@ const LoginPage = () => {
             placeholder="Enter your password"
           />
 
-          <button
+          <div
             onClick={onLogin}
-            type="button"
             className="
-            w-full font-medium rounded-lg text-sm text-white pink-button mb-4
-            transition duration-200 ease-in-out transform hover:scale-105"
+            w-full p-[10px] font-medium rounded-lg text-sm text-white pink-button mb-4
+            transition duration-200 ease-in-out transform hover:scale-105 cursor-pointer"
           >
             {buttonDisabled ? "No Login" : "Login"}
-          </button>
+          </div>
           <div>
             Don&apos;t have an account?{" "}
             <span className="font-semibold text-pink transition duration-200">

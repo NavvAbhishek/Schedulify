@@ -126,7 +126,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
                 className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
               />
             </div>
-            <div>
+             <div>
               <label
                 htmlFor="teacherAvailability"
                 className="block mb-2 text-sm"

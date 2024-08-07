@@ -5,11 +5,11 @@
 /*? --------------- Buttons --------------- */
 
 .pink-button {
-  @apply text-black bg-pink rounded-lg p-2.5 text-center transition-all duration-300;
+  @apply text-black bg-pink rounded-lg text-center transition-all duration-300;
 }
 
 .pink-button:hover {
-    @apply pl-2 pr-4; /* Increase padding to make the button wider */
+    @apply pr-2; /* Increase padding to make the button wider */
 }
 
 /* .blue-button {
@@ -19,6 +19,29 @@
 .blue-button:hover {
   @apply pl-2 pr-4; /* Increase padding to make the button wider 
 } */
+
+/*! ------------ ScrollBar Styles ------------ */
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #7209B7;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #F72585;
+}
   
   /*? --------------- Navbar Links --------------- */
 .desktop-nav div::after {

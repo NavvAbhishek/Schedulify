@@ -18,7 +18,7 @@ type LoadedClassData = {
 const AdminDashboard = () => {
   const [classData, setClassData] = useState({
     className: "",
-    roomCapacity: "",
+    roomCapacity: "25",
     teacherId: "",
     teacherName: "",
     subject: "",
@@ -49,6 +49,12 @@ const AdminDashboard = () => {
       toast.error(error.message);
     }
   };
+
+  const handleGenerateTimetables = () => {
+    toast("Generating time tables...", {
+      icon: "🚀",
+    });
+  }
 
   useEffect(() => {
     const getClassesData = async () => {
@@ -172,6 +178,11 @@ const AdminDashboard = () => {
               </tbody>
             </table>
           </div>
+          <button 
+          onClick={handleGenerateTimetables}
+          className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            Generate Time tables
+          </button>
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@ const SignupPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-200">
       <div className="logo flex flex-row gap-5 items-center md:mb-5">
+        <Link href='/'>
         <Image
           src="/Logo.png"
           alt="logo"
@@ -56,7 +57,8 @@ const SignupPage = () => {
           height={80}
           className="rounded w-[60px] h-[60px] md:w-[80px] md:h-[80px]"
         />
-        <h1 className="text-2xl text-purple md:text-4xl font-bold">Attendix</h1>
+        </Link>
+        <h1 className="text-2xl text-purple md:text-4xl font-bold">Schedulify</h1>
       </div>
       <div className="flex md:flex-row flex-col">
         <div className="mt-3 md:mt-0">
@@ -127,15 +129,15 @@ const SignupPage = () => {
             </select>
           </div>
           {/* //! ----------------------Signup Button------------------------ */}
-          <button
+          <div
             onClick={onSignup}
-            type="button"
+          
             className="
-        w-full font-medium rounded-lg text-sm pink-button mb-4
+        w-full p-[10px] text-white font-medium rounded-lg text-sm pink-button mb-4
         transition duration-200 ease-in-out transform hover:scale-105"
           >
             {buttonDisabled ? "No Signup" : "Signup"}
-          </button>
+          </div>
           <div>
             Have an account?{" "}
             <span className="font-semibold text-pink transition duration-200">

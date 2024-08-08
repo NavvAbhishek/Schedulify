@@ -54,7 +54,10 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
         <div className="content">
           <div className="flex gap-10">
             <div>
-              <label htmlFor="className" className="block mb-2 text-md font-bold">
+              <label
+                htmlFor="className"
+                className="block mb-2 text-md font-bold"
+              >
                 Class Name
               </label>
               <input
@@ -67,7 +70,10 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
               />
             </div>
             <div>
-              <label htmlFor="roomCapacity" className="block mb-2 text-md font-bold">
+              <label
+                htmlFor="roomCapacity"
+                className="block mb-2 text-md font-bold"
+              >
                 Room Capacity
               </label>
               <input
@@ -82,7 +88,10 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
           </div>
           <div className="flex gap-10">
             <div>
-              <label htmlFor="teacherId" className="block mb-2 text-md font-bold">
+              <label
+                htmlFor="teacherId"
+                className="block mb-2 text-md font-bold"
+              >
                 Teacher ID
               </label>
               <input
@@ -94,7 +103,10 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
               />
             </div>
             <div>
-              <label htmlFor="teacherName" className="block mb-2 text-md font-bold">
+              <label
+                htmlFor="teacherName"
+                className="block mb-2 text-md font-bold"
+              >
                 Teacher Name
               </label>
               <input
@@ -126,11 +138,14 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
           <p className="block mb-2 text-md font-bold">Teacher Availability</p>
           <div className="flex flex-row flex-wrap gap-5">
             {days.map((day, index) => (
-              <div key={index} className="flex gap-5">
-                <div className="flex items-center gap-4 mb-4">
+              <div
+                key={index}
+                className="flex gap-5"
+              >
+                <div className="flex items-center gap-4 mb-4 justify-center">
                   <label
                     htmlFor={day.checkboxName}
-                    className="block mb-2 text-sm"
+                    className="block text-sm"
                   >
                     {day.name}
                   </label>
@@ -138,23 +153,8 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
                     type="checkbox"
                     name={day.checkboxName}
                     value={day.name}
-                    className="form-checkbox h-5 w-5 text-purple-600"
-                  />
-                  <div className="ml-4 flex items-center gap-2">
-                    <label htmlFor="time" className="block mb-2 text-sm">
-                      Time:
-                    </label>
-                    <select
-                      name="time"
-                      className="px-4 py-2 border-2 text-white bg-dark-blue border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
-                    >
-                      <option value="" selected disabled>
-                        Choose
-                      </option>
-                      <option value="partTime">Part time</option>
-                      <option value="fullTime">Full time</option>
-                    </select>
-                  </div>
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
+                  ></input>
                 </div>
               </div>
             ))}

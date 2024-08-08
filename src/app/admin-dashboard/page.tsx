@@ -12,7 +12,7 @@ type LoadedClassData = {
   teacherId: string;
   teacherName: string;
   subject: string;
-  teacherAvailability: string;
+  teacherAvailability: string[];
 };
 
 const AdminDashboard = () => {
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
                     <td>{data.teacherId}</td>
                     <td>{data.teacherName}</td>
                     <td>{data.subject}</td>
-                    <td>{data.teacherAvailability}</td>
+                    <td>{data.teacherAvailability.filter(day => day !== "").join(", ")}</td>
                     <td>
                       <MdDelete
                         className="w-6 h-6 cursor-pointer"

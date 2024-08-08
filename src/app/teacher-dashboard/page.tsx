@@ -40,17 +40,9 @@ const TeacherDashboard = () => {
       try {
         const res = await axios.get("/api/get-data");
         console.log("API Response:", res.data);
-        if (Array.isArray(res.data.data)) {
-          const formattedData = res.data.data.map((classData: any) => ({
-           
-            ...classData,
-            teacherAvailability: Array.isArray(classData.teacherAvailability)
-              ? classData.teacherAvailability
-              : classData.teacherAvailability,
 
-              
-          }));
-          setLoadedClassData(formattedData);
+        if (Array.isArray(res.data.data)) {
+          setLoadedClassData(res.data.data);
         } else {
           console.error("Data is not an array", res.data);
         }

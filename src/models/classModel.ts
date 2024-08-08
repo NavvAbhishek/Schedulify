@@ -21,8 +21,9 @@ const ClassSchema = new mongoose.Schema({
 
     },
     teacherAvailability: {
-        type: String,
-
+        type: [String],
+        enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+        default: []
     },
 })
 

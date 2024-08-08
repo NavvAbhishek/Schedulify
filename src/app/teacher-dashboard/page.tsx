@@ -12,12 +12,13 @@ type LoadedClassData = {
   teacherId: string;
   teacherName: string;
   subject: string;
-  teacherAvailability: string;
+  teacherAvailability: string[];
 };
 
 const TeacherDashboard = () => {
   const [loadedClassData, setLoadedClassData] = useState<LoadedClassData[]>([]);
-  const [selectedClassData, setSelectedClassData] = useState<LoadedClassData | null>(null);
+  const [selectedClassData, setSelectedClassData] =
+    useState<LoadedClassData | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleEditClick = (data: LoadedClassData) => {
@@ -39,9 +40,17 @@ const TeacherDashboard = () => {
       try {
         const res = await axios.get("/api/get-data");
         console.log("API Response:", res.data);
-
         if (Array.isArray(res.data.data)) {
-          setLoadedClassData(res.data.data);
+          const formattedData = res.data.data.map((classData: any) => ({
+           
+            ...classData,
+            teacherAvailability: Array.isArray(classData.teacherAvailability)
+              ? classData.teacherAvailability
+              : classData.teacherAvailability,
+
+              
+          }));
+          setLoadedClassData(formattedData);
         } else {
           console.error("Data is not an array", res.data);
         }
@@ -56,7 +65,9 @@ const TeacherDashboard = () => {
     <div>
       <Navbar />
       <div className="flex flex-col items-center gap-10 flex-shrink-0 py-5">
-        <h1 className="text-3xl text-dark-blue font-bold text-center">Classess</h1>
+        <h1 className="text-3xl text-dark-blue font-bold text-center">
+          Classess
+        </h1>
         <div className="overflow-x-auto">
           <table className="table">
             <thead className="table-head bg-dark-blue text-white">
@@ -78,7 +89,7 @@ const TeacherDashboard = () => {
                   <td>{data.teacherId}</td>
                   <td>{data.teacherName}</td>
                   <td>{data.subject}</td>
-                  <td>{data.teacherAvailability}</td>
+                  <td>{data.teacherAvailability.filter(day => day !== "").join(", ")}</td>
                   <td>
                     <MdModeEditOutline
                       onClick={() => handleEditClick(data)}
@@ -93,10 +104,10 @@ const TeacherDashboard = () => {
         </div>
       </div>
       {isPopupOpen && selectedClassData && (
-        <PopupBox 
-        data={selectedClassData} 
-        onClose={() => setIsPopupOpen(false)}
-        onSave={handleSave}
+        <PopupBox
+          data={selectedClassData}
+          onClose={() => setIsPopupOpen(false)}
+          onSave={handleSave}
         />
       )}
     </div>

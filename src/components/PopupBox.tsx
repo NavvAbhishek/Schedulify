@@ -10,7 +10,7 @@ type PopupBoxProps = {
     teacherId: string;
     teacherName: string;
     subject: string;
-    teacherAvailability: string;
+    teacherAvailability: string[];
   };
   onClose: () => void;
   onSave: (updatedClass: any) => void;
@@ -19,13 +19,24 @@ type PopupBoxProps = {
 const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
   const [formData, setFormData] = React.useState({
     ...data,
+    teacherAvailability: data.teacherAvailability || [],
   });
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData((prevState) => {
+        const updatedAvailability = checked
+          ? [...prevState.teacherAvailability, value]
+          : prevState.teacherAvailability.filter((day) => day !== value);
+        return { ...prevState, teacherAvailability: updatedAvailability };
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleUpdateClass = async () => {
@@ -40,11 +51,11 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
   };
 
   const days = [
-    { name: "monday", checkboxName: "checkbox1" },
-    { name: "tuesday", checkboxName: "checkbox2" },
-    { name: "wednesday", checkboxName: "checkbox3" },
-    { name: "thursday", checkboxName: "checkbox4" },
-    { name: "friday", checkboxName: "checkbox5" },
+    { name: "monday", checkboxName: "monday" },
+    { name: "tuesday", checkboxName: "tuesday" },
+    { name: "wednesday", checkboxName: "wednesday" },
+    { name: "thursday", checkboxName: "thursday" },
+    { name: "friday", checkboxName: "friday" },
   ];
 
   return (
@@ -138,21 +149,17 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
           <p className="block mb-2 text-md font-bold">Teacher Availability</p>
           <div className="flex flex-row flex-wrap gap-5">
             {days.map((day, index) => (
-              <div
-                key={index}
-                className="flex gap-5"
-              >
+              <div key={index} className="flex gap-5">
                 <div className="flex items-center gap-4 mb-4 justify-center">
-                  <label
-                    htmlFor={day.checkboxName}
-                    className="block text-sm"
-                  >
+                  <label htmlFor={day.checkboxName} className="block text-sm">
                     {day.name}
                   </label>
                   <input
                     type="checkbox"
                     name={day.checkboxName}
                     value={day.name}
+                    checked={formData.teacherAvailability.includes(day.name)}
+                    onChange={handleInputChange}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
                   ></input>
                 </div>

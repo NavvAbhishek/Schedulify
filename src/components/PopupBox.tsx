@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import axios from "axios";
 
@@ -16,11 +16,30 @@ type PopupBoxProps = {
   onSave: (updatedClass: any) => void;
 };
 
+type UserData = {
+  _id: string;
+  role: string;
+};
+
 const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
   const [formData, setFormData] = React.useState({
     ...data,
     teacherAvailability: data.teacherAvailability || [],
   });
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const res = await axios.get("/api/users/me");
+        console.log(res.data);
+        setUserData(res.data.data);
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
+    getUserDetails();
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -77,7 +96,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
                 value={formData.className}
                 onChange={handleInputChange}
                 className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
-                disabled
+                disabled={userData?.role === "teacher"}
               />
             </div>
             <div>
@@ -93,7 +112,7 @@ const PopupBox: React.FC<PopupBoxProps> = ({ data, onClose, onSave }) => {
                 value={formData.roomCapacity}
                 onChange={handleInputChange}
                 className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
-                disabled
+                disabled={userData?.role === "teacher"}
               />
             </div>
           </div>

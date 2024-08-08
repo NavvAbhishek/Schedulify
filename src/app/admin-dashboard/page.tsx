@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import PopupBox from "@/components/PopupBox";
 
 type LoadedClassData = {
   _id: string;
@@ -25,6 +26,9 @@ const AdminDashboard = () => {
     teacherAvailability: "",
   });
   const [loadedClassData, setLoadedClassData] = useState<LoadedClassData[]>([]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedClassData, setSelectedClassData] =
+  useState<LoadedClassData | null>(null);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -55,6 +59,20 @@ const AdminDashboard = () => {
       icon: "🚀",
     });
   }
+
+  const handleEditClick = (data: LoadedClassData) => {
+    setSelectedClassData(data);
+    setIsPopupOpen(true);
+  };
+
+  const handleSave = (updatedClass: LoadedClassData) => {
+    const updatedData = loadedClassData.map((classData) =>
+      classData._id === updatedClass._id ? updatedClass : classData
+    );
+
+    setLoadedClassData(updatedData);
+    setIsPopupOpen(false);
+  };
 
   useEffect(() => {
     const getClassesData = async () => {
@@ -168,15 +186,23 @@ const AdminDashboard = () => {
                       />
                     </td>
                     <td>
-                      <MdModeEditOutline
-                        className="w-6 h-6 cursor-pointer"
-                        title="Edit Class"
-                      />
+                       <MdModeEditOutline
+                      onClick={() => handleEditClick(data)}
+                      className="w-6 h-6 cursor-pointer"
+                      title="Edit Class"
+                    />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            {isPopupOpen && selectedClassData && (
+        <PopupBox
+          data={selectedClassData}
+          onClose={() => setIsPopupOpen(false)}
+          onSave={handleSave}
+        />
+      )}
           </div>
           <button 
           onClick={handleGenerateTimetables}

@@ -28,7 +28,7 @@ const AdminDashboard = () => {
   const [loadedClassData, setLoadedClassData] = useState<LoadedClassData[]>([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedClassData, setSelectedClassData] =
-  useState<LoadedClassData | null>(null);
+    useState<LoadedClassData | null>(null);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
     toast("Generating time tables...", {
       icon: "🚀",
     });
-  }
+  };
 
   const handleEditClick = (data: LoadedClassData) => {
     setSelectedClassData(data);
@@ -91,6 +91,21 @@ const AdminDashboard = () => {
     };
     getClassesData();
   }, []);
+
+  const handleDeleteClass = async (classId: string) => {
+    try {
+      const res = await axios.delete(`/api/delete-class?id=${classId}`);
+      console.log(res.data);
+      toast.success("Class deleted successfully");
+
+      setLoadedClassData((prevData) =>
+        prevData.filter((classData) => classData._id !== classId)
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete task");
+    }
+  };
 
   return (
     <div>
@@ -178,35 +193,41 @@ const AdminDashboard = () => {
                     <td>{data.teacherId}</td>
                     <td>{data.teacherName}</td>
                     <td>{data.subject}</td>
-                    <td>{data.teacherAvailability.filter(day => day !== "").join(", ")}</td>
+                    <td>
+                      {data.teacherAvailability
+                        .filter((day) => day !== "")
+                        .join(", ")}
+                    </td>
                     <td>
                       <MdDelete
+                        onClick={() => handleDeleteClass(data._id)}
                         className="w-6 h-6 cursor-pointer"
                         title="Delete Class"
                       />
                     </td>
                     <td>
-                       <MdModeEditOutline
-                      onClick={() => handleEditClick(data)}
-                      className="w-6 h-6 cursor-pointer"
-                      title="Edit Class"
-                    />
+                      <MdModeEditOutline
+                        onClick={() => handleEditClick(data)}
+                        className="w-6 h-6 cursor-pointer"
+                        title="Edit Class"
+                      />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
             {isPopupOpen && selectedClassData && (
-        <PopupBox
-          data={selectedClassData}
-          onClose={() => setIsPopupOpen(false)}
-          onSave={handleSave}
-        />
-      )}
+              <PopupBox
+                data={selectedClassData}
+                onClose={() => setIsPopupOpen(false)}
+                onSave={handleSave}
+              />
+            )}
           </div>
-          <button 
-          onClick={handleGenerateTimetables}
-          className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+          <button
+            onClick={handleGenerateTimetables}
+            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
             Generate Time tables
           </button>
         </div>

@@ -36,6 +36,8 @@ const AdminDashboard = () => {
       console.log("Sending class data:", classData);
       const response = await axios.post("/api/add-data", classData);
       console.log("Class Data addedd successfully", response.data);
+      // Update the loadedClassData state to include the newly added class
+      setLoadedClassData((prevData) => [...prevData, response.data.savedClass]);
       // Reset the form here
       setClassData({
         className: "",

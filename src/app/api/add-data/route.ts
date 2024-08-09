@@ -6,11 +6,15 @@ connect()
 
 export async function POST(req: NextRequest) {
     try {
-        const reqBody = await req.json()
+        const reqBody = await req.json();
         console.log("Received request body:", reqBody);
 
-        const { className, roomCapacity, teacherId, teacherName, subject, teacherAvailability } = reqBody
-        console.log(reqBody)
+        const { className, roomCapacity, teacherId, teacherName, subject, teacherAvailability } = reqBody;
+
+        // Filter out invalid or empty strings from teacherAvailability
+        const validTeacherAvailability = (teacherAvailability || []).filter((day: string) => 
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].includes(day)
+        );
 
         const newClass = new Class({
             className,
@@ -18,20 +22,19 @@ export async function POST(req: NextRequest) {
             teacherId,
             teacherName,
             subject,
-            teacherAvailability
-        })
+            teacherAvailability: validTeacherAvailability,
+        });
 
-        const savedClass = await newClass.save()
-        console.log(savedClass)
+        const savedClass = await newClass.save();
+        console.log("Saved class:", savedClass);
 
         return NextResponse.json({
             message: "Class created successfully",
             success: true,
             savedClass
-        })
+        });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message },
-            { status: 500 }
-        )
+        console.error("Error creating class:", error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

@@ -19,7 +19,7 @@ type LoadedClassData = {
 const AdminDashboard = () => {
   const [classData, setClassData] = useState({
     className: "",
-    roomCapacity: "25",
+    roomCapacity: "",
     teacherId: "",
     teacherName: "",
     subject: "",
@@ -36,9 +36,9 @@ const AdminDashboard = () => {
       console.log("Sending class data:", classData);
       const response = await axios.post("/api/add-data", classData);
       console.log("Class Data addedd successfully", response.data);
-      // Update the loadedClassData state to include the newly added class
+      // Update the table with newly added class
       setLoadedClassData((prevData) => [...prevData, response.data.savedClass]);
-      // Reset the form here
+      // Reset the form
       setClassData({
         className: "",
         roomCapacity: "",
@@ -153,6 +153,9 @@ const AdminDashboard = () => {
                   }
                   className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
                 >
+                  <option value="" disabled selected hidden>
+                    Choose
+                  </option>
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="75">75</option>

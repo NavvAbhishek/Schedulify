@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import PopupBox from "@/components/PopupBox";
+import { useRouter } from "next/navigation";
 
 type LoadedClassData = {
   _id: string;
@@ -17,6 +18,7 @@ type LoadedClassData = {
 };
 
 const AdminDashboard = () => {
+  const router = useRouter();
   const [classData, setClassData] = useState({
     className: "",
     roomCapacity: "",
@@ -54,12 +56,6 @@ const AdminDashboard = () => {
       console.error(error);
       toast.error(error.message);
     }
-  };
-
-  const handleGenerateTimetables = () => {
-    toast("Generating time tables...", {
-      icon: "🚀",
-    });
   };
 
   const handleEditClick = (data: LoadedClassData) => {
@@ -109,6 +105,21 @@ const AdminDashboard = () => {
     }
   };
 
+  const generateTimetable = async () => {
+    try {
+      const response = await axios.get("/api/get-data");
+      console.log(response);
+
+      router.push(
+        `/timetable-data?timetableData=${encodeURIComponent(
+          JSON.stringify(response.data.data)
+        )}`
+      );
+    } catch (error) {
+      console.error("Error fetching class data:", error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -153,7 +164,7 @@ const AdminDashboard = () => {
                   }
                   className="px-4 py-2 border-2 text-black border-purple rounded-lg focus:outline-none focus:ring-2 focus:ring-purple"
                 >
-                  <option value="" disabled selected hidden>
+                  <option value="" disabled hidden>
                     Choose
                   </option>
                   <option value="25">25</option>
@@ -230,7 +241,7 @@ const AdminDashboard = () => {
             )}
           </div>
           <button
-            onClick={handleGenerateTimetables}
+            onClick={generateTimetable}
             className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >
             Generate Time tables

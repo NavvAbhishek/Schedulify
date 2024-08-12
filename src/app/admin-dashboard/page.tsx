@@ -107,16 +107,12 @@ const AdminDashboard = () => {
 
   const generateTimetable = async () => {
     try {
-      const response = await axios.get("/api/get-data");
-      console.log(response);
+      const response = await axios.post("/api/timetable-data", loadedClassData);
+      console.log(response.data);
 
-      router.push(
-        `/timetable-data?timetableData=${encodeURIComponent(
-          JSON.stringify(response.data.data)
-        )}`
-      );
+      router.push(`/timetable-data`);
     } catch (error) {
-      console.error("Error fetching class data:", error);
+      console.error("Error generating timetable:", error);
     }
   };
 

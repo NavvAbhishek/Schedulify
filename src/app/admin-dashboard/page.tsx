@@ -31,7 +31,7 @@ const AdminDashboard = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedClassData, setSelectedClassData] =
     useState<LoadedClassData | null>(null);
-
+  console.log("----------loadedClassData------------", loadedClassData);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {

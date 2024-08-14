@@ -44,26 +44,27 @@ const TimetableDataPage = () => {
 
   return (
     <div className="p-6">
-      {Object.keys(schedule).map((day) => (
-        <div key={day}>
-          <h2 className="mt-5">{day.toUpperCase()}</h2>
-          {Object.keys(schedule[day]).map((slot) => (
-            <div key={slot}>
-              <strong>{slot}: </strong>
-              {schedule[day][slot].length > 0 ? (
-                schedule[day][slot].map((cls, index) => (
-                  <span key={index}>
-                    {cls.className} ({cls.subject}, {cls.teacherId})
-                    {index < schedule[day][slot].length - 1 && " | "}
-                  </span>
-                ))
-              ) : (
-                <span>No Class</span>
-              )}
-            </div>
-          ))}
-        </div>
-      ))}
+      <div className="grid grid-cols-3 gap-4">
+        {days.map((day) => (
+          <div key={day} className="flex flex-col">
+            <h2 className="text-lg font-bold mb-2">{day.toUpperCase()}</h2>
+            {timeSlots.map((slot) => (
+              <div key={slot} className="mb-2 flex gap-3">
+                <strong className="block">{slot}: </strong>
+                {schedule[day] && schedule[day][slot].length > 0 ? (
+                  schedule[day][slot].map((cls, index) => (
+                    <span key={index} className="block">
+                      {cls.className} ({cls.subject}, {cls.teacherId})
+                    </span>
+                  ))
+                ) : (
+                  <span className="block">No Class</span>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

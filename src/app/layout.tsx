@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { ScheduleProvider } from "@/context/ScheduleContext";
 
 const openSans = Open_Sans({
   weight: ["300", "400", "600", "700", "800"],
@@ -22,9 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={openSans.className}>
-      <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"  rel="stylesheet" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
+          rel="stylesheet"
+        />
         <Toaster />
-        {children}
+        <ScheduleProvider>{children}</ScheduleProvider>
       </body>
     </html>
   );

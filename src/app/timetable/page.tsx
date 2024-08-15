@@ -22,19 +22,30 @@ const Timetable = () => {
         return "bg-purple-500 text-white";
       case "music":
         return "bg-pink-500 text-white";
-      case "pe":
+      case "java":
         return "bg-indigo-500 text-white";
       default:
         return "bg-gray-200 text-black";
     }
   };
 
+  const formatTeacherName = (fullName: string) => {
+    const [firstName, lastName] = fullName.split(" ");
+    const initial = firstName.charAt(0);
+    return `${initial} ${lastName}`;
+  };
+
   return (
     <div className="p-4 bg-white shadow rounded-lg">
-      <div className="capitalize text-dark-blue text-center mt-4 mb-8 text-3xl font-bold">
-        Curriculum Schedule
+      <div>
+        <div className="capitalize text-dark-blue text-center mt-4 mb-8 text-3xl font-bold">
+          Timetable 📅
+        </div>
       </div>
-      <div className="grid grid-cols-6 gap-3" style={{ gridTemplateColumns: '1fr 2fr 2fr 2fr 2fr 2fr' }}>
+      <div
+        className="grid grid-cols-6 gap-3"
+        style={{ gridTemplateColumns: "1fr 2fr 2fr 2fr 2fr 2fr" }}
+      >
         {/* Header for time slots */}
         <div></div>
         {days.map((day) => (
@@ -46,19 +57,27 @@ const Timetable = () => {
         {/* Rows for each time slot */}
         {timeSlots.map((slot, slotIndex) => (
           <React.Fragment key={slot}>
-            <div className="font-semibold text-center my-auto">
-              {slot}
-            </div>
+            <div className="font-semibold text-center my-auto">{slot}</div>
             {days.map((day) => (
-              <div key={day} className="flex justify-center items-center h-16 border border-gray-300">
+              <div
+                key={day}
+                className="flex justify-center items-center h-24 border border-gray-300"
+              >
                 {schedule[day] && schedule[day][slot].length > 0 ? (
                   schedule[day][slot].map((cls, index) => (
                     <div
                       key={index}
-                      className={`w-[60px] h-[50px] flex flex-col justify-center rounded-lg ${getClassStyle(cls.subject)} text-center`}
+                      className={`w-[80px] h-[60px] flex flex-col justify-center rounded-lg ${getClassStyle(
+                        cls.subject
+                      )} text-center`}
                     >
-                      <span className="block font-bold text-xs">{cls.className}</span>
+                      <span className="block font-bold text-xs">
+                        {cls.className}
+                      </span>
                       <span className="block text-xs">{cls.subject}</span>
+                      <span className="block text-[10px]">
+                        {formatTeacherName(cls.teacherName)}
+                      </span>
                     </div>
                   ))
                 ) : (

@@ -1,13 +1,43 @@
 "use client";
-import React, { useState } from "react";
-import { useSchedule } from "@/context/ScheduleContext";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { days, timeSlots } from "@/helpers/algorithm";
 
+interface ClassDetails {
+  className: string;
+  roomCapacity: string;
+  subject: string;
+  teacherAvailability: string[];
+  teacherId: string;
+  teacherName: string;
+}
+
+type Schedule = {
+  [day: string]: {
+    [timeSlot: string]: ClassDetails[];
+  };
+};
+
 const Timetable = () => {
-  const { schedule } = useSchedule();
+  const [schedule, setSchedule] = useState<Schedule>({});
   const [filterClassName, setFilterClassName] = useState<string>("");
   const [filterTeacherId, setFilterTeacherId] = useState<string>("");
-  const [filteredSchedule, setFilteredSchedule] = useState(schedule);
+  const [filteredSchedule, setFilteredSchedule] = useState<Schedule>({});
+
+  useEffect(() => {
+    const fetchTimetableData = async () => {
+      try {
+        const res = await axios.get("/api/get-timetable");
+        const timetableData = res.data.data.schedule; // Adjust to access nested data
+        setSchedule(timetableData);
+        setFilteredSchedule(timetableData); // Initialize with full data
+      } catch (error) {
+        console.error("Error fetching timetable data:", error);
+      }
+    };
+
+    fetchTimetableData();
+  }, []);
 
   const getClassStyle = (subject: string) => {
     switch (subject.toLowerCase()) {
@@ -44,8 +74,7 @@ const Timetable = () => {
       return;
     }
 
-    //? declares a new object, newSchedule, which will store the filtered timetable data
-    const newSchedule: typeof schedule = {};
+    const newSchedule: Schedule = {};
 
     days.forEach((day) => {
       newSchedule[day] = {};

@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import PopupBox from "@/components/PopupBox";
 import { useRouter } from "next/navigation";
+import { createTimetable, timeSlots, days } from "@/helpers/algorithm";
 
 type LoadedClassData = {
   _id: string;
@@ -107,8 +108,9 @@ const AdminDashboard = () => {
 
   const generateTimetable = async () => {
     try {
-      const response = await axios.post("/api/timetable-data", loadedClassData);
-      console.log(response.data);
+      const generatedSchedule = createTimetable(loadedClassData, timeSlots, days);
+      const response = await axios.post("/api/save-timetable", generatedSchedule);
+      console.log("Timetable saved:", response.data);
 
       router.push(`/timetable-data`);
     } catch (error) {

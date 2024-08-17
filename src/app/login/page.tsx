@@ -41,7 +41,7 @@ const LoginPage = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-200">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <div className="logo flex flex-row gap-5 items-center md:mb-5">
       <Link href='/'>
         <Image

@@ -97,9 +97,9 @@ const Timetable = () => {
         <div className="capitalize text-dark-blue text-center mt-4 text-3xl font-bold">
           Timetable 📅
         </div>
-        <div className="mb-5">
+        <div className="">
           <input
-            className="p-2 mr-3 border border-purple rounded-lg text-purple mb-4 focus:border-purple focus:ring focus:ring-purple transition duration-200"
+            className="p-2 mr-3 border border-purple rounded-lg text-purple focus:border-purple focus:ring focus:ring-purple transition duration-200"
             type="text"
             id="className"
             value={filterClassName}
@@ -107,7 +107,7 @@ const Timetable = () => {
             placeholder="Enter class name"
           />
           <input
-            className="p-2 mr-3 border border-purple rounded-lg text-purple mb-4 focus:border-purple focus:ring focus:ring-purple transition duration-200"
+            className="p-2 mr-3 border border-purple rounded-lg text-purple focus:border-purple focus:ring focus:ring-purple transition duration-200"
             type="text"
             id="teacherId"
             value={filterTeacherId}
@@ -120,7 +120,9 @@ const Timetable = () => {
           >
             Search 🔍
           </button>
+          
         </div>
+        <div className="mb-5 text-xs">(you can input class name or id to search)</div>
       </div>
       <div
         className="grid grid-cols-6 gap-3"

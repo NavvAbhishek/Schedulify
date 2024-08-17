@@ -1,13 +1,11 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import profileImg from "../../../public/profile-img.png";
 import Navbar from "@/components/Navbar";
-import BackButton from "@/components/BackButton";
 
 type UserData = {
   _id: string;
@@ -52,9 +50,6 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <Link href="/">
-        <BackButton title="Back to Home" />
-      </Link>
       <div className="flex flex-col items-center ">
         <div>
           <h1 className="text-3xl font-bold text-pink p-2 rounded-md mt-16 sm:mt-18">

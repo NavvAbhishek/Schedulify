@@ -55,7 +55,7 @@ const TimetableDataPage = () => {
     <div className="p-6">
       <div>
         <div className="capitalize text-dark-blue text-center mb-8 text-3xl font-bold">
-          Full Overview of Timetable Data
+          Full Overview of Timetable Data 📋
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {days.map((day) => (

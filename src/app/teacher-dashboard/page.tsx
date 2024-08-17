@@ -58,7 +58,7 @@ const TeacherDashboard = () => {
       <Navbar />
       <div className="flex flex-col items-center gap-10 flex-shrink-0 py-5">
         <h1 className="text-3xl text-dark-blue font-bold text-center">
-          Classess
+          Classess 🧑‍🏫
         </h1>
         <div className="overflow-x-auto">
           <table className="table">

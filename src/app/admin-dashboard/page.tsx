@@ -108,8 +108,15 @@ const AdminDashboard = () => {
 
   const generateTimetable = async () => {
     try {
-      const generatedSchedule = createTimetable(loadedClassData, timeSlots, days);
-      const response = await axios.post("/api/save-timetable", generatedSchedule);
+      const generatedSchedule = createTimetable(
+        loadedClassData,
+        timeSlots,
+        days
+      );
+      const response = await axios.post(
+        "/api/save-timetable",
+        generatedSchedule
+      );
       console.log("Timetable saved:", response.data);
 
       router.push(`/timetable-data`);
@@ -122,11 +129,9 @@ const AdminDashboard = () => {
     <div>
       <Navbar />
       <div className="flex flex-col sm:flex-row">
-        <div className="w-1/4 flex-shrink-0 ">
+        <div className="sm:w-1/4 flex-shrink-0 ">
           <div className="py-5">
-            <h1 className="text-3xl text-purple font-bold text-center">
-              Add Data
-            </h1>
+            <h1 className="text-3xl text-purple font-bold px-16">Add Data</h1>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-start px-10 py-10"
@@ -172,9 +177,8 @@ const AdminDashboard = () => {
                 </select>
               </div>
               <button
-                type="button"
                 onClick={handleSubmit}
-                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                className="pink-button p-2 font-bold"
               >
                 Add Data
               </button>
@@ -183,7 +187,7 @@ const AdminDashboard = () => {
         </div>
         <div className="w-3/4 flex flex-col items-center gap-10 flex-shrink-0 py-5">
           <h1 className="text-3xl text-purple font-bold text-center">
-            Classess
+            Classess 🧑‍🏫
           </h1>
           <div className="overflow-x-auto">
             <table className="table">
@@ -240,7 +244,7 @@ const AdminDashboard = () => {
           </div>
           <button
             onClick={generateTimetable}
-            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            className="pink-button p-2 font-bold"
           >
             Generate Time tables
           </button>

@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { days, timeSlots } from "@/helpers/algorithm";
 import toast from "react-hot-toast";
+import BackButton from "@/components/BackButton";
 interface ClassDetails {
   className: string;
   roomCapacity: string;
@@ -53,6 +54,11 @@ const TimetableDataPage = () => {
 
   return (
     <div className="p-6">
+       <Link href="/">
+        <BackButton title="Back to Home" 
+        className="top-[20px] cursor-pointer text-sm"
+        />
+      </Link>
       <div>
         <div className="capitalize text-dark-blue text-center mb-8 text-3xl font-bold">
           Full Overview of Timetable Data 📋

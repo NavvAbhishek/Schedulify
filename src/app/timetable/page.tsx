@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { days, timeSlots } from "@/helpers/algorithm";
+import BackButton from "@/components/BackButton";
+import Link from "next/link";
 
 interface ClassDetails {
   className: string;
@@ -93,6 +95,11 @@ const Timetable = () => {
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
+      <Link href="/timetable-data">
+        <BackButton title="Back" 
+        className="top-[20px] cursor-pointer text-sm"
+        />
+      </Link>
       <div>
         <div className="capitalize text-dark-blue text-center mt-4 text-3xl font-bold">
           Timetable 📅

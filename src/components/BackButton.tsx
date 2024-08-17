@@ -12,6 +12,7 @@ const BackButton: React.FC<BackButtonProps> = ({ title, className }) => {
      <button
       className={clsx(
         "pink-button flex items-center p-[6px] top-[120px] left-5 absolute ",
+        className
       )}
     >
       <MdArrowBackIos className="transition-all group-hover:-translate-x-1" />

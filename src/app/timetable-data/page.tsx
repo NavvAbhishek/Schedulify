@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { days, timeSlots } from "@/helpers/algorithm";
+import toast from "react-hot-toast";
 interface ClassDetails {
   className: string;
   roomCapacity: string;
@@ -20,7 +21,7 @@ type Schedule = {
 
 const TimetableDataPage = () => {
   const [schedule, setSchedule] = useState<Schedule>({});
-  console.log("----------------schedule data------------------",schedule)
+  console.log("----------------schedule data------------------", schedule);
   useEffect(() => {
     const fetchTimetableData = async () => {
       try {
@@ -37,6 +38,19 @@ const TimetableDataPage = () => {
     fetchTimetableData();
   }, []);
 
+  const deleteSheduleData = async () => {
+    try {
+      const res = await axios.delete("/api/delete-timetable"); 
+      console.log("Delete Response", res.data)
+      setSchedule({});
+      toast('Timetable Shedules Deleted!', {
+        icon: '🚮',
+      });
+    } catch (error) {
+      console.error("Error deleting timetable data:", error);
+    }
+  };
+
   return (
     <div className="p-6">
       <div>
@@ -52,7 +66,9 @@ const TimetableDataPage = () => {
               {timeSlots.map((slot) => (
                 <div key={slot} className="mb-2 flex gap-3">
                   <strong className="block text-dark-blue">{slot}: </strong>
-                  {schedule[day] && schedule[day][slot] && schedule[day][slot].length > 0 ? (
+                  {schedule[day] &&
+                  schedule[day][slot] &&
+                  schedule[day][slot].length > 0 ? (
                     schedule[day][slot].map((cls, index) => (
                       <span key={index} className="block">
                         {cls.className} ({cls.subject}, {cls.teacherName})
@@ -67,10 +83,16 @@ const TimetableDataPage = () => {
           ))}
         </div>
       </div>
-      <div className="text-right sm:mr-16">
+      <div className="flex items-center justify-end gap-8">
         <Link href="/timetable">
           <button className="pink-button p-2 font-bold">View Timetable</button>
         </Link>
+        <button
+          onClick={deleteSheduleData}
+          className="pink-button p-2 font-bold"
+        >
+          Delete Shedule Data
+        </button>
       </div>
     </div>
   );

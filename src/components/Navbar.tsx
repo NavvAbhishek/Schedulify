@@ -20,7 +20,6 @@ type UserData = {
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
-
   useEffect(() => {
     const getUserDetails = async () => {
       try {
@@ -64,7 +63,7 @@ export default function Navbar() {
         </div>
         {/* -----------------Links------------------- */}
         <nav className="desktop-nav text-pink text-md font-semibold leading-6 hidden lg:flex lg:gap-x-12">
-        <div className="relative">
+          <div className="relative">
             <Link href="/">Home</Link>
           </div>
           <div className="relative">
@@ -83,25 +82,36 @@ export default function Navbar() {
         </nav>
         {/* -----------------buttons------------------- */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
-          {userData?.role === "student" || "teacher" ? (
-            <Link href="/timetable" className="pink-button group">
-              <div className="flex justify-center items-center gap-2 p-[7px]">
-                <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                  View Timetable
-                </p>
-                <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-              </div>
-            </Link>
-          ) : (
-            <Link href="/login" className="pink-button group">
-              <div className="flex justify-center items-center gap-2 p-[7px]">
-                <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                  Getting Start
-                </p>
-                <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-              </div>
-            </Link>
-          )}
+          <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
+            {userData?.role === "admin" ? (
+              <Link href="/timetable-data" className="pink-button group">
+                <div className="flex justify-center items-center gap-2 p-[7px]">
+                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
+                    Manage Timetable
+                  </p>
+                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
+                </div>
+              </Link>
+            ) : userData?.role === "student" || userData?.role === "teacher" ? (
+              <Link href="/timetable" className="pink-button group">
+                <div className="flex justify-center items-center gap-2 p-[7px]">
+                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
+                    View Timetable
+                  </p>
+                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
+                </div>
+              </Link>
+            ) : (
+              <Link href="/login" className="pink-button group">
+                <div className="flex justify-center items-center gap-2 p-[7px]">
+                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
+                    Getting Start
+                  </p>
+                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
+                </div>
+              </Link>
+            )}
+          </div>
         </div>
       </nav>
       <Dialog

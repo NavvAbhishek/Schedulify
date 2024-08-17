@@ -184,7 +184,7 @@ const Timetable = () => {
         />
       </Link>
       {loading ? (
-        <div className="flex justify-center items-center h-[41.4rem]">
+        <div className="flex justify-center items-center h-[44.75rem]">
           <ThreeDot
             variant="bounce"
             color="#3A0CA3"
@@ -274,7 +274,9 @@ const Timetable = () => {
               ))}
             </div>
           </div>
-          <PrintAsPdf contentRef={contentRef} />
+          <div className="mt-5">
+            <PrintAsPdf text="Print Timetable" contentRef={contentRef} />
+          </div>
         </div>
       )}
     </div>

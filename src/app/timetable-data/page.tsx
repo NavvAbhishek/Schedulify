@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { days, timeSlots } from "@/helpers/algorithm";
 import toast from "react-hot-toast";
 import BackButton from "@/components/BackButton";
+import PrintAsPdf from "@/components/PrintAsPdf";
 interface ClassDetails {
   className: string;
   roomCapacity: string;
@@ -22,7 +23,8 @@ type Schedule = {
 
 const TimetableDataPage = () => {
   const [schedule, setSchedule] = useState<Schedule>({});
-  console.log("----------------schedule data------------------", schedule);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const fetchTimetableData = async () => {
       try {
@@ -41,11 +43,11 @@ const TimetableDataPage = () => {
 
   const deleteSheduleData = async () => {
     try {
-      const res = await axios.delete("/api/delete-timetable"); 
-      console.log("Delete Response", res.data)
+      const res = await axios.delete("/api/delete-timetable");
+      console.log("Delete Response", res.data);
       setSchedule({});
-      toast('Timetable Shedules Deleted!', {
-        icon: '🚮',
+      toast("Timetable Shedules Deleted!", {
+        icon: "🚮",
       });
     } catch (error) {
       console.error("Error deleting timetable data:", error);
@@ -54,12 +56,13 @@ const TimetableDataPage = () => {
 
   return (
     <div className="p-6">
-       <Link href="/">
-        <BackButton title="Back to Home" 
-        className="top-[20px] cursor-pointer text-sm"
+      <Link href="/">
+        <BackButton
+          title="Back to Home"
+          className="top-[20px] cursor-pointer text-sm"
         />
       </Link>
-      <div>
+      <div className="printableArea" ref={contentRef}>
         <div className="capitalize text-dark-blue text-center mb-8 text-3xl font-bold">
           Full Overview of Timetable Data 📋
         </div>
@@ -89,7 +92,8 @@ const TimetableDataPage = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-end gap-8">
+      <div className="flex items-center justify-end gap-6">
+        <PrintAsPdf text="Print Timetable Data" contentRef={contentRef} />
         <Link href="/timetable">
           <button className="pink-button p-2 font-bold">View Timetable</button>
         </Link>

@@ -15,6 +15,7 @@ type UserData = {
   password: string;
   role: string;
   isVerified: boolean;
+  className: string;
 };
 
 export default function Navbar() {

@@ -14,6 +14,7 @@ type UserData = {
   password: string;
   role: string;
   isVerified: boolean;
+  className: string;
 };
 
 const ProfilePage = () => {

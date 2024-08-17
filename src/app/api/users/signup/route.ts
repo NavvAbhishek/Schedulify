@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
         console.log("Received request body:", reqBody); 
-        const { username, email, password, role } = reqBody
+        const { username, email, password, role, className } = reqBody
 
         console.log(reqBody)
 
@@ -28,7 +28,8 @@ export async function POST(request: NextRequest) {
             username,
             email,
             password: hashedPassword,
-            role
+            role,
+            className
         })
 
         const savedUser = await newUser.save()

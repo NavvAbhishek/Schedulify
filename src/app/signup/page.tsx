@@ -14,6 +14,7 @@ const SignupPage = () => {
     password: "",
     username: "",
     role: "student",
+    className: "",
   });
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -49,16 +50,18 @@ const SignupPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-200">
       <div className="logo flex flex-row gap-5 items-center md:mb-5">
-        <Link href='/'>
-        <Image
-          src="/Logo.png"
-          alt="logo"
-          width={80}
-          height={80}
-          className="rounded w-[60px] h-[60px] md:w-[80px] md:h-[80px]"
-        />
+        <Link href="/">
+          <Image
+            src="/Logo.png"
+            alt="logo"
+            width={80}
+            height={80}
+            className="rounded w-[60px] h-[60px] md:w-[80px] md:h-[80px]"
+          />
         </Link>
-        <h1 className="text-2xl text-purple md:text-4xl font-bold">Schedulify</h1>
+        <h1 className="text-2xl text-purple md:text-4xl font-bold">
+          Schedulify
+        </h1>
       </div>
       <div className="flex md:flex-row flex-col">
         <div className="mt-3 md:mt-0">
@@ -72,10 +75,7 @@ const SignupPage = () => {
           <h1 className="font-bold text-center mb-4 text-4xl">
             {loading ? "⌛ Processing..." : "📝 Signup"}
           </h1>
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium  mb-1"
-          >
+          <label htmlFor="username" className="block text-sm font-medium  mb-1">
             Username
           </label>
           <input
@@ -87,10 +87,7 @@ const SignupPage = () => {
             placeholder="Enter your username"
           />
 
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium  mb-1"
-          >
+          <label htmlFor="email" className="block text-sm font-medium  mb-1">
             Email
           </label>
           <input
@@ -116,22 +113,39 @@ const SignupPage = () => {
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             placeholder="Enter your password"
           />
-          {/* //! ----------------------Dropdown menu------------------------ */}
-          <div className="mb-4">
-            <select
-              value={user.role}
-              onChange={(e) => setUser({ ...user, role: e.target.value })}
-              className="p-2 border border-gray-300 rounded-lg"
-            >
-              <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-              <option value="admin">Admin</option>
-            </select>
+          {/* //! ----------------------Dropdown menu and className------------------------ */}
+          <div className="flex justify-start items-center gap-5">
+            <div className="mb-4">
+              <select
+                value={user.role}
+                onChange={(e) => setUser({ ...user, role: e.target.value })}
+                className="p-2 border border-gray-300 rounded-lg"
+              >
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div>
+              {user.role === "student" ? (
+                <input
+                  className="p-3 border border-gray-300 rounded-lg text-black w-full mb-5 focus:border-purple focus:ring focus:ring-purple transition duration-200"
+                  type="className"
+                  id="className"
+                  value={user.className}
+                  onChange={(e) =>
+                    setUser({ ...user, className: e.target.value })
+                  }
+                  placeholder="Enter class name (Ex-9B)"
+                />
+              ) : (
+                <div></div>
+              )}
+            </div>
           </div>
           {/* //! ----------------------Signup Button------------------------ */}
           <div
             onClick={onSignup}
-          
             className="
         w-full p-[10px] text-white font-medium rounded-lg text-sm pink-button mb-4
         transition duration-200 ease-in-out transform hover:scale-105"

@@ -23,7 +23,6 @@ export async function middleware(req: NextRequest) {
 
             const restrictedRoutesForTeachers = [
                 "/timetable-data",
-                "/timetable",
             ];
             if (userRole === "teacher" && restrictedRoutesForTeachers.includes(path)) {
                 return NextResponse.redirect(new URL("/", req.nextUrl));
@@ -31,7 +30,6 @@ export async function middleware(req: NextRequest) {
 
             const restrictedRoutesForStudents = [
                 "/timetable-data",
-                "/timetable",
                 "/teacher-dashboard",
                 "/admin-dashboard"
             ];
@@ -52,7 +50,6 @@ export const config = {
         '/signup',
         '/profile',
         '/timetable-data',
-        '/timetable',
         "/teacher-dashboard",
         "/admin-dashboard"
     ],

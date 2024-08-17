@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "../../public/shedulify logo.png";
+import logo from "../../public/LogoRBG.png";
 import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { FaBars } from "react-icons/fa";
@@ -36,20 +36,22 @@ export default function Navbar() {
   return (
     <header className="bg-black">
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
+        className="flex items-center justify-between mx-4"
         aria-label="Global"
       >
+        {/* -----------------logo-------------------- */}
         <div className="flex lg:flex-1">
           <Link href="/" className="">
             <span className="sr-only">Your Company</span>
             <Image
               src={logo}
               alt="Picture of the author"
-              width={60}
-              height={60}
+              width={75}
+              height={75}
             />
           </Link>
         </div>
+        {/* -----------------bars------------------- */}
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -60,7 +62,11 @@ export default function Navbar() {
             <FaBars className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
+        {/* -----------------Links------------------- */}
         <nav className="desktop-nav text-pink text-md font-semibold leading-6 hidden lg:flex lg:gap-x-12">
+        <div className="relative">
+            <Link href="/">Home</Link>
+          </div>
           <div className="relative">
             {userData?.role === "admin" ? (
               <Link href="/admin-dashboard">Dashboard</Link>
@@ -75,15 +81,27 @@ export default function Navbar() {
             <Link href="/about-us">About us</Link>
           </div>
         </nav>
+        {/* -----------------buttons------------------- */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
-          <Link href="/login" className="pink-button group">
-            <div className="flex justify-center items-center gap-2 p-[7px]">
-              <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                Getting Start
-              </p>
-              <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-            </div>
-          </Link>
+          {userData?.role === "student" || "teacher" ? (
+            <Link href="/timetable" className="pink-button group">
+              <div className="flex justify-center items-center gap-2 p-[7px]">
+                <p className="font-semibold transition-all duration-300 group-hover:mr-2">
+                  View Timetable
+                </p>
+                <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
+              </div>
+            </Link>
+          ) : (
+            <Link href="/login" className="pink-button group">
+              <div className="flex justify-center items-center gap-2 p-[7px]">
+                <p className="font-semibold transition-all duration-300 group-hover:mr-2">
+                  Getting Start
+                </p>
+                <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
+              </div>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog

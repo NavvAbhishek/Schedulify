@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { days, timeSlots } from "@/helpers/algorithm";
 import BackButton from "@/components/BackButton";
 import Link from "next/link";
 import { ThreeDot } from "react-loading-indicators";
-
+import PrintAsPdf from "@/components/PrintAsPdf";
 interface ClassDetails {
   className: string;
   roomCapacity: string;
@@ -38,7 +38,7 @@ const Timetable = () => {
   const [filteredSchedule, setFilteredSchedule] = useState<Schedule>({});
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true); // Start loading as true
-
+  const contentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const fetchTimetableData = async () => {
       try {
@@ -183,11 +183,6 @@ const Timetable = () => {
           className="top-[20px] cursor-pointer text-sm"
         />
       </Link>
-      <div>
-        <div className="capitalize text-dark-blue text-center mt-4 text-3xl font-bold">
-          Timetable 📅
-        </div>
-      </div>
       {loading ? (
         <div className="flex justify-center items-center h-[41.4rem]">
           <ThreeDot
@@ -198,9 +193,8 @@ const Timetable = () => {
         </div>
       ) : (
         <div>
-          {" "}
           {userData?.role === "admin" ? (
-            <div>
+            <div className="text-right">
               <input
                 className="p-2 mr-3 border border-purple rounded-lg text-purple focus:border-purple focus:ring focus:ring-purple transition duration-200"
                 type="text"
@@ -223,56 +217,64 @@ const Timetable = () => {
               >
                 Search 🔍
               </button>
-              <div className="mb-5 text-xs">
+              <div className="text-xs">
                 (you can input class name or id to search)
               </div>
             </div>
           ) : null}
-          <div
-            className="grid grid-cols-6 gap-3"
-            style={{ gridTemplateColumns: "1fr 2fr 2fr 2fr 2fr 2fr" }}
-          >
-            <div></div>
-            {days.map((day) => (
-              <div key={day} className="text-center font-semibold">
-                {day.charAt(0).toUpperCase() + day.slice(1)}
-              </div>
-            ))}
+          <div className=" printableArea" ref={contentRef}>
+            <div className="capitalize text-dark-blue text-center mb-12 text-4xl font-bold">
+              Timetable 📅
+            </div>
+            <div
+              className="grid grid-cols-6 gap-3"
+              style={{ gridTemplateColumns: "1fr 2fr 2fr 2fr 2fr 2fr" }}
+            >
+              <div></div>
+              {days.map((day) => (
+                <div key={day} className="text-center font-semibold">
+                  {day.charAt(0).toUpperCase() + day.slice(1)}
+                </div>
+              ))}
 
-            {timeSlots.map((slot) => (
-              <React.Fragment key={slot}>
-                <div className="font-semibold text-center my-auto">{slot}</div>
-                {days.map((day) => (
-                  <div
-                    key={day}
-                    className="flex justify-center items-center h-24 border border-gray-300"
-                  >
-                    {filteredSchedule[day] &&
-                    filteredSchedule[day][slot].length > 0 ? (
-                      filteredSchedule[day][slot].map((cls, index) => (
-                        <div
-                          key={index}
-                          className={`w-[80px] h-[60px] flex flex-col justify-center rounded-lg ${getClassStyle(
-                            cls.subject
-                          )} text-center`}
-                        >
-                          <span className="block font-bold text-xs">
-                            {cls.className}
-                          </span>
-                          <span className="block text-xs">{cls.subject}</span>
-                          <span className="block text-[10px]">
-                            {formatTeacherName(cls.teacherName)}
-                          </span>
-                        </div>
-                      ))
-                    ) : (
-                      <span className="text-gray-500">No Class</span>
-                    )}
+              {timeSlots.map((slot) => (
+                <React.Fragment key={slot}>
+                  <div className="font-semibold text-center my-auto">
+                    {slot}
                   </div>
-                ))}
-              </React.Fragment>
-            ))}
+                  {days.map((day) => (
+                    <div
+                      key={day}
+                      className="flex justify-center items-center h-24 border border-gray-300"
+                    >
+                      {filteredSchedule[day] &&
+                      filteredSchedule[day][slot].length > 0 ? (
+                        filteredSchedule[day][slot].map((cls, index) => (
+                          <div
+                            key={index}
+                            className={`w-[80px] h-[60px] flex flex-col justify-center rounded-lg ${getClassStyle(
+                              cls.subject
+                            )} text-center`}
+                          >
+                            <span className="block font-bold text-xs">
+                              {cls.className}
+                            </span>
+                            <span className="block text-xs">{cls.subject}</span>
+                            <span className="block text-[10px]">
+                              {formatTeacherName(cls.teacherName)}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <span className="text-gray-500">No Class</span>
+                      )}
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
+          <PrintAsPdf contentRef={contentRef} />
         </div>
       )}
     </div>

@@ -174,3 +174,10 @@
 .custom-popup .actions .button:hover {
   background-color: #FFD700; /* slightly different yellow for hover effect */
 }
+
+/*? --------------- For print as pdf --------------- */
+@media print {
+  .printableArea {
+    padding: 2rem
+  }
+}

@@ -34,6 +34,7 @@ const AdminDashboard = () => {
   const [selectedClassData, setSelectedClassData] =
     useState<LoadedClassData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [timetableExists, setTimetableExists] = useState(false);
   console.log("----------loadedClassData------------", loadedClassData);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -92,7 +93,19 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
+
+    const checkTimetableExists = async () => {
+      try {
+        const res = await axios.get("/api/check-timetable");
+        if (res.data.exists) {
+          setTimetableExists(true);
+        }
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
     getClassesData();
+    checkTimetableExists();
   }, []);
 
   const handleDeleteClass = async (classId: string) => {
@@ -257,12 +270,14 @@ const AdminDashboard = () => {
                 />
               )}
             </div>
-            <button
-              onClick={generateTimetable}
-              className="pink-button p-2 font-bold"
-            >
-              Generate Time tables 🚀
-            </button>
+            {!timetableExists && (
+              <button
+                onClick={generateTimetable}
+                className="pink-button p-2 font-bold"
+              >
+                Generate Time tables 🚀
+              </button>
+            )}
           </div>
         )}
       </div>

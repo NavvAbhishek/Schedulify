@@ -61,9 +61,7 @@ const Timetable = () => {
       } catch (error) {
         console.error("Error fetching timetable data:", error);
       } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setLoading(false);
       }
     };
 

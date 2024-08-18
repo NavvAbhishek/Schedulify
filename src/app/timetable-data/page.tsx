@@ -56,9 +56,9 @@ const TimetableDataPage = () => {
 
   return (
     <div className="p-6">
-      <Link href="/">
+      <Link href="/admin-dashboard">
         <BackButton
-          title="Back to Home"
+          title="Back to Dashboard"
           className="top-[20px] cursor-pointer text-sm"
         />
       </Link>

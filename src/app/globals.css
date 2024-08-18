@@ -8,10 +8,6 @@
   @apply text-black bg-pink rounded-lg text-center transition-all duration-300;
 }
 
-.pink-button:hover {
-    @apply pr-2; /* Increase padding to make the button wider */
-}
-
 /* .blue-button {
   @apply text-light-yellow bg-normal-blue rounded-lg p-2 text-center transition-all duration-300;
 }
@@ -48,7 +44,7 @@
     content: "";
     position: absolute;
     display: block;
-    height: 3.5px;
+    height: 2.5px;
     width: 0%;
     background-color: #F72585;
     transition: all ease-in-out 250ms;

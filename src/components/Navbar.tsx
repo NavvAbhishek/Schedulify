@@ -2,9 +2,9 @@
 import Image from "next/image";
 import logo from "../../public/LogoRBG.png";
 import { useEffect, useState } from "react";
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import { FaBars } from "react-icons/fa";
-import { FaXmark, FaArrowRightLong } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 import Link from "next/link";
 import axios from "axios";
 
@@ -36,11 +36,11 @@ export default function Navbar() {
   return (
     <header className="bg-black">
       <nav
-        className="flex items-center justify-between mx-4"
+        className="flex items-center justify-between mx-3 md:mx-40"
         aria-label="Global"
       >
         {/* -----------------logo-------------------- */}
-        <div className="flex lg:flex-1">
+        <div className="">
           <Link href="/" className="">
             <span className="sr-only">Your Company</span>
             <Image
@@ -51,19 +51,9 @@ export default function Navbar() {
             />
           </Link>
         </div>
-        {/* -----------------bars------------------- */}
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-pink"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <FaBars className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
+
         {/* -----------------Links------------------- */}
-        <nav className="desktop-nav text-pink text-md font-semibold leading-6 hidden lg:flex lg:gap-x-12">
+        <nav className="desktop-nav text-pink text-md font-semibold leading-6 hidden md:flex md:gap-x-6 lg:gap-x-6">
           <div className="relative">
             <Link href="/">Home</Link>
           </div>
@@ -81,48 +71,60 @@ export default function Navbar() {
             <Link href="/about-us">About us</Link>
           </div>
         </nav>
+
         {/* -----------------buttons------------------- */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
-          <div className="hidden lg:flex lg:flex-1 lg:justify-center lg:items-center">
-            {userData?.role === "admin" ? (
-              <Link href="/timetable-data" className="pink-button group">
-                <div className="flex justify-center items-center gap-2 p-[7px]">
-                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                    Manage Timetable
-                  </p>
-                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ) : userData?.role === "student" || userData?.role === "teacher" ? (
-              <Link href="/timetable" className="pink-button group">
-                <div className="flex justify-center items-center gap-2 p-[7px]">
-                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                    View Timetable
-                  </p>
-                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ) : (
-              <Link href="/login" className="pink-button group">
-                <div className="flex justify-center items-center gap-2 p-[7px]">
-                  <p className="font-semibold transition-all duration-300 group-hover:mr-2">
-                    Getting Start
-                  </p>
-                  <FaArrowRightLong className="transition-all transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </Link>
-            )}
-          </div>
+
+        <div className="hidden md:flex">
+          {userData?.role === "admin" ? (
+            <Link href="/timetable-data" className="pink-button">
+              <div className="flex justify-center items-center gap-2 p-[7px]">
+                <p className="font-semibold transition-all duration-300">
+                  Manage Timetable
+                </p>
+                🗂️
+              </div>
+            </Link>
+          ) : userData?.role === "student" || userData?.role === "teacher" ? (
+            <Link href="/timetable" className="pink-button">
+              <div className="flex justify-center items-center gap-2 p-[7px]">
+                <p className="font-semibold transition-all duration-300">
+                  View Timetable
+                </p>
+                👀
+              </div>
+            </Link>
+          ) : (
+            <Link href="/login" className="pink-button">
+              <div className="flex justify-center items-center gap-2 p-[7px]">
+                <p className="font-semibold transition-all duration-300">
+                  Getting Start
+                </p>
+                🚀
+              </div>
+            </Link>
+          )}
+        </div>
+
+        {/* -----------------bars------------------- */}
+        <div className="flex md:hidden">
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-pink"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <FaBars className="h-6 w-6" aria-hidden="true" />
+          </button>
         </div>
       </nav>
       <Dialog
         as="div"
-        className="lg:hidden"
+        className="md:hidden"
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black pl-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black pl-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Image
               src={logo}
@@ -187,7 +189,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-        </Dialog.Panel>
+        </DialogPanel>
       </Dialog>
     </header>
   );

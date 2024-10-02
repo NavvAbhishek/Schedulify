@@ -250,7 +250,7 @@ const Timetable = () => {
                         filteredSchedule[day][slot].map((cls, index) => (
                           <div
                             key={index}
-                            className={`w-[80px] h-[60px] flex flex-col justify-center rounded-lg ${getClassStyle(
+                            className={`w-[80px] h-[60px] flex flex-col justify-center rounded-lg mr-2 ${getClassStyle(
                               cls.subject
                             )} text-center`}
                           >

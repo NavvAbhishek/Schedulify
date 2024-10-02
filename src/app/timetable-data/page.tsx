@@ -23,6 +23,10 @@ type Schedule = {
 
 const TimetableDataPage = () => {
   const [schedule, setSchedule] = useState<Schedule>({});
+  console.log(
+    "$$$$$$$$$$$$$$$$$$-------------- schedule --------------$$$$$$$$$$$$$$$$$$",
+    schedule
+  );
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,6 +37,10 @@ const TimetableDataPage = () => {
         const timetableData = res.data.data.schedule;
         console.log("Fetched Timetable Data:", timetableData);
         setSchedule(timetableData); // Set the fetched schedule to state
+        console.log(
+          "$$$$$$$$$$$$$$$$$$-------------- schedule --------------$$$$$$$$$$$$$$$$$$",
+          schedule
+        );
       } catch (error) {
         console.error("Error fetching timetable data:", error);
       }

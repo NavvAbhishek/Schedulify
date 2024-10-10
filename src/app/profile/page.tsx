@@ -58,41 +58,44 @@ const ProfilePage = () => {
           </h1>
         </div>
         {userData && (
-          <div className="flex flex-col gap-4 items-center sm:px-16 px-9 py-6 mt-6 rounded-lg bg-dark-blue text-white cursor-pointer ">
+          <div className="flex flex-col sm:flex-row items-center mt-6 rounded-lg bg-dark-blue  text-white ">
             <div>
               <Image
                 src={profileImg}
                 alt="Picture of User"
-                className="mt-4 w-[125px] h-[125px] rounded-2xl"
+                className="
+                w-[350px] h-[250px] sm:w-[380px] sm:h-[300px] sm:rounded-l-lg rounded-t-lg sm:rounded-none"
               />
             </div>
-            <div>
+            <div className="bg-dark-blue w-[350px] h-[250px] sm:h-[300px] sm:w-[380px] flex flex-col items-left justify-center p-[5rem] text-yellow  sm:rounded-r-lg rounded-b-lg sm:rounded-none">
               <div>
-                <span className="font-bold">Name - </span>
+                <span className="font-bold cursor-pointer">Name - </span>
                 {userData.username}{" "}
               </div>
               <div>
-                <span className="font-bold">User ID - </span>
+                <span className="font-bold cursor-pointer">User ID - </span>
                 {userData._id.slice(6, 10)}
               </div>
               <div>
-                <span className="font-bold">Email - </span>
+                <span className="font-bold cursor-pointer">Email - </span>
                 {userData.email}{" "}
+              </div>
+              <div>
+                <span className="font-bold cursor-pointer">Role - </span>
+                {userData.role}{" "}
+              </div>
+              <div>
+                <button
+                  onClick={logout}
+                  className="pink-button font-bold mt-6 cursor-pointer"
+                  style={{ padding: "0.5rem 1.25rem" }}
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </div>
         )}
-        <hr />
-        <div>
-          <div
-            onClick={logout}
-            className="pink-button font-bold mt-6 cursor-pointer"
-            style={{ padding: "0.5rem 1.25rem" }}
-          >
-            Logout
-          </div>
-        </div>
-        <div></div>
       </div>
     </div>
   );
